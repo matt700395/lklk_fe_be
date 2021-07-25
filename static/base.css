@@ -1,0 +1,53 @@
+
+
+.LKLK_footer {
+    text-align:center;
+    margin-bottom: 2rem;
+}
+
+.LKLK_footer_button{
+    font-size: .9rem;
+}
+
+.LKLK_header {
+    text-align:center;
+    margin: 2rem 0;
+}
+
+.LKLK_header_nav {
+    margin: 0 0.5rem;
+}
+
+.LKLK_header_navbar{
+    margin: 1rem 0;
+}
+
+.LKLK_login_nav {
+    margin: 0 0.5rem;
+}
+
+.LKLK_login_navbar {
+    margin: 0 0.5rem;
+    margin-bottom: 1rem;
+    font-size: .5rem;
+}
+
+.container {
+      padding: 0;
+      margin: 0, auto;
+}
+
+.container a {
+      width: 45%;
+      max-width: 250px;
+}
+
+.container div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+}
+
+.container img {
+    width: 40%;
+}

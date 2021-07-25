@@ -1,0 +1,42 @@
+
+<style>
+
+    .container {
+      padding: 0;
+      margin: 0, auto;
+    }
+
+     .container a {
+      width: 45%;
+      max-width: 250px;
+    }
+
+    .container div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container img {
+      width: 30%;
+    }
+
+</style>
+
+{% load static %}
+
+  {% if project_list %}
+    {% for project in project_list %}
+      <div class="container" style="margin: 2rem auto">
+        <a href="{% url 'projectapp:detail' pk=project.pk %}">
+          <img src="{{ project.image.url }}" alt=""> <br>
+          {{ project.title }}
+        </a>
+      </div>
+    {% endfor %}
+
+  {% else %}
+  <div class="text-center">
+    <h1>No Project YET!</h1>
+  </div>
+  {% endif %}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+    <div style="text-align: center">
+      <a href="{% url 'projectapp:create' %}" class="btn btn-dark rounded-pill mt-3 mb-3 px-3">
+        Create Project
+      </a>
+    </div>
+
+
+  {% if project_list %}
+    <div class="container">
+       {% for project in project_list %}
+      <a href="{% url 'projectapp:detail' pk=project.pk %}">
+        <div>
+            <h3>
+          {{ project.title }}
+          </h3>
+        </div>
+        <div>
+          <h5>
+            {{ project.content | safe }}
+          </h5>
+        </div>
+
+<!--        프로젝트 게시물 사진 3개 include-->
+        {% include 'snippets/card.html' with project=project %}
+
+        <div>
+          <h6>
+            join
+          </h6>
+        </div>
+      </a>
+      <hr>
+      {% endfor %}
+    </div>
+
+  {% else %}
+  <div class="text-center">
+    <h1>No Articles YET!</h1>
+  </div>
+  {% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div>
+    <div style="text-align:center; max-width:500px; margin: 4rem auto">
+
+       <h1>
+           {{target_project.title}}
+       </h1>
+
+        <a href="{% url 'accountapp:detail' pk=target_project.writer.pk %}" >
+            <h4>
+                <img src="{{ target_project.writer.profile.image.url }}" alt=""
+                     style="height: 3rem; width: 3rem; border-radius: 10rem; object-fit: cover;">
+
+                {{ target_project.writer.profile.nickname }}
+            </h4>
+        </a>
+
+        <hr>
+        <h5>
+            {{target_project.content}}
+        </h5>
+
+        <img src="{{target_project.image.url}}" alt=""  class="container">
+        <img src="{{target_project.image2.url}}" alt=""  class="container">
+        <img src="{{target_project.image3.url}}" alt=""  class="container">
+
+    <!--        구직 인원, 지원자 수 (-> 구현 전 프로젝트 생성시 지원자 수 추가생성 )-->
+
+    <!--        프로젝트 글쓴이일 경우 수정, 삭제 권한, join 지원자 보기-->
+        {% if target_project.writer == user %}
+            <a href="{% url 'projectapp:update' pk=target_project.pk %}">
+                <p>Update Project</p>
+            </a>
+            <a href="{% url 'projectapp:delete' pk=target_project.pk %}">
+                <p>Delete Project</p>
+            </a>
+        <hr>
+             <h4>Join List</h4>
+
+            <!--        join 한 유저의 정보 받아오기       -->
+            {% for join in join_list %} <!-- view.py의 projectDetail 에서 join 과 join_list 따로 받아왔음. -->
+                {% if target_project.pk == join.project.pk %}
+                <div style="margin: 2rem auto">
+                    <a href="{% url 'accountapp:detail' pk=join.user.pk %}" >
+                        <h4>
+    <!--                    프로필 설정이 안되어있을 경우, 추후 기본이미지로 표시    -->
+    <!--                    추후 count 변수 생성 후 지원자수 출력, 지원자 == 0일경우 문구 출력-->
+                            {% if join.user.profile.image %}
+                                <img src="{{ join.user.profile.image.url }}" alt=""
+                                     style="height: 3rem; width: 3rem; border-radius: 10rem; object-fit: cover;">
+                            {% endif %}
+
+                            {{ join.user }}
+
+<!--                            지원 수락 거절 만들기 -->
+
+                        </h4>
+                    </a>
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+
+    <!--        로그인 한 경우 join버튼 구현 완료, 추후 프로젝트 만든 사람의 오픈카톡링크 -->
+        <div class="text-center mb-5">
+            {% if user.is_authenticated and target_project.writer != user %}
+                {% if not join %}
+                <a href="{% url 'joinapp:join' %}?project_pk={{ target_project.pk }}"
+                    class="btn btn-primary rounded-pill px-4">
+                    join
+                </a>
+                {% else %}
+                <a href="{% url 'joinapp:join' %}?project_pk={{ target_project.pk }}"
+                    class="btn btn-dark rounded-pill px-4">
+                    Unjoin
+                </a>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <hr>
+        <a href="{% url 'home' %}">
+            <p>다른 프로젝트 보기</p>
+        </a>
+    </div>
+</div>
+{% endblock %}
